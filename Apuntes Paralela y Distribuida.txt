@@ -1,0 +1,79 @@
+Anotaciones Clase 1:
+
+Se están alcanzando los límites físicos para aumentar el rendimiento de una máquina. Entonces la solución en está en hacer Computación Paralela, mediante el manejo de Threads.
+Si bien puede que una aplicación sea fuertemente consumida, para evitar esperas, se puede realizar Computación Distribuida, es decir, que el manejo de estos Threads se realicen en muchas computadoras a la vez (Red).
+
+El por qué de la materia, viene dado por la misma vida diaria, como el uso de Smartphones, el fuerte crecimiento de IoT, entre otras, ya que se procesan muchas cosas a la vez, entonces:
+  *Ahorrar tiempo
+  *Resolver grandes problemas
+  *Proveer concurrencia
+
+Esto se logra a través de dos conceptos interrelacionados : virtualización, que genera la idea de que todo se está ejecutando en una computadora; integración, que comunica dichas computadoras.  
+
+------------------Background-------------------------
+
+Multiprocesadores : contienen muchas CPU que ejecutan instrucciones de forma individual. Existen dos formas de comunicar estos procesadores :
+
+*Memoria compartida : poseen en común la memoria principal (RAM), realizando operaciones de tipo load/store. Se genera una comunicación entre procesadores si uno lee lo que el otro escribe.
+
+*Memoria distribuida :  cada procesador cuenta con su propia memoria. Estos sistemas hacen que se llamen multicomputadoras en vez de multiprocesadores. Se realizan operaciones de tipo send/receive . 
+
+El hardware a implementar en sistemas distribuidos es mucho más simple que en sistemas de memoria compartida. Aún así, pasa lo contrario respecto de tiempos y software.
+
+Hoy en día, en realidad, existe un híbrido entre multiprocesamiento y multicomputación. Localmente, una computadora hoy cuenta con más de un procesador. Además, la internet es un sistema distribuido que conecta a muchas computadoras con muchos procesadores.
+
+------------------ Tipos de Computación -------------
+
+High Performance Computing (HPC) o Supercomputadora es por definición, una computadora que cuenta con una enorme cantidad de procesadores con el fin de analizar y resolver problemas difíciles. El problema de estas computadoras es el precio que cuestan, y la logística del hardware, ya que muchos procesadores deben consumir de la misma memoria.
+
+Cluster Computing o computación por agrupamiento simula a lo que es una supercomputadora, pero contando con muchas computadoras normales, a una corta distancia. Esto abarata los costos (aunque siga siendo caro el despliegue). La logística complicada del hardware se delega a la logística del software. Con el paso del tiempo hoy se aplica mucho más Cluster Computing que HPC.
+
+Peer to Peer Computing : confía en la potencia y el ancho de banda de los participantes de la red, en vez  de ver que la cantidad de servicios y/o pedidos sean bajos. Se usa principalmente para compartir archivos. Una de las desventajas que tiene es que si se genera muchísimos pedidos se genera cuello de botella haciendo que los tiempos sean mucho más lentos.
+
+Cloud Computing: la idea es similar a los clusters, pero se brinda a usuarios y/o empresas a demanda, para el uso de almacenamiento y servicios.
+
+
+-------------------- Threads OpenMP ----------------
+
+A través de una biblioteca llamada OpenMP se puede realizar paralelismo a través de threads especificando qué porción de código se pretende hacer paralela. Todo lo que se necesite hacer secuencial no se lo marca. Se puede realizar paralelismo a nivel de iteración, es decir, que cada iteración se puede ejecutar perfectamente en un procesador por separado (siempre y cuando el número de iteraciones sea menor o igual a la cantidad de procesadores, o que no existan dependencias entre las iteraciones).
+
+Ejemplo :
+
+#include <omp.h>
+#include <stdio.h>
+int main(void){
+  #pragma omp parallel
+  printf(“hello from thread %d\n”, omp_get_thread_num  ());
+}
+export OMP_NUM_THREADS=4 ;
+
+Con el pragma se indica que todo lo que tenga omp se preprocese y lo ejecute en paralelo. Con el export se identifica la cantidad de threads que van a generarse. Por defecto va a generar uno por cada procesador que tenga la máquina.
+
+En el ejemplo, se van a ejecutar 4 hola mundos, identificados por el número de thread correspondiente. Paraleliza el printf.
+
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
