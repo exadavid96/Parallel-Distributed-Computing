@@ -1,5 +1,6 @@
-Anotaciones Clase 1:
-
+......................
+.Anotaciones Clase 1:.
+......................
 Se están alcanzando los límites físicos para aumentar el rendimiento de una máquina. Entonces la solución en está en hacer Computación Paralela, mediante el manejo de Threads.
 Si bien puede que una aplicación sea fuertemente consumida, para evitar esperas, se puede realizar Computación Distribuida, es decir, que el manejo de estos Threads se realicen en muchas computadoras a la vez (Red).
 
@@ -52,12 +53,49 @@ Con el pragma se indica que todo lo que tenga omp se preprocese y lo ejecute en 
 En el ejemplo, se van a ejecutar 4 hola mundos, identificados por el número de thread correspondiente. Paraleliza el printf.
 
 
-     
 
+......................
+.Anotaciones Clase 2 :.
+......................     
 
+Granularidad respecto de la comunicación entre las tareas:
 
+*Fine-grained parallelism : llamado granularidad fina. Como las tareas son chicas, se comunican muchas veces por segundo.
 
+*Coarse-grained parallelism : llamado granularidad gruesa. Como las tareas son muy grandes, la comunicación se da menos veces por segundo.
 
+*Embarassing parallelism : llamado paralelismo vergonzoso, significa que las tareas casi o no se comunican porque el paralelismo es casi perfecto.
+
+-------------------- Fine Grained -----------------
+
+El programa se divide en un montón de taras de poco tamaño. La carga de trabajo asociado a cada tarea es poco y se distribuye a los distintos procesadores. Debido a que estas tareas deben comunicarse bastante, la lupa está en que la comunicación lo más rápida posible, a través de redes de interconexión. Los compiladores detectan y planifican dicha delegación de los procesadores a través de dependencias de datos siempre que puedan.
+
+-------------------- Coarse Grained ---------------
+
+El programa se divide en tareas más grandes. Esto puede generar un mayor problema en el balanceo de carga porque puede que el tamaño de cada tarea puede variar respecto de cada uno, entonces mientras una termina mucho antes puede esperar el resultado de otra que todavía no lo obtuvo.
+Como en realidad son pocas tareas, la comunicación es más baja, y por ende el tiempo de sincronización también lo es.
+
+  
+------------- Aplicaciones y Arquitecturas ----------
+
+Las arquitecturas no hacen cuento aparte respecto de las ideas sobre la computación, comunicación y paralelismo. Sino que a la hora de diseñar una arquitectura para una aplicación, es necesario saber los grados mencionados arriba, para ver cuál es la que se adapta mejor a estas limitaciones de hardware/software.
+
+*Computación y No Paralelismo(Aplicaciones seriales) :
+
+Orientado a aplicaciones donde se realizan cálculos científicos donde el paralelismo es casi nulo, pero que se requiere una gran cantidad de cómputos para resolver necesidades de esa área.
+Para esto se hace uso de granjas, o mejor dicho , supercomputadoras, ya que al no tener buena comunicación, es necesario que las distancias para la computación sea la menor posible.
+ 
+*Computación y Paralelismo (Data Parallel) :
+
+Al contar con paralelismo, se realizan aplicaciones orientadas a paralelizar a nivel de dato, generando una ganancia en el rendimiento. Aquí existe el concepto de Fork-Join, es decir, dividir tareas en subtareas y luego unirlas. No es apto para aplicaciones de interés general. Esto se puede realizar tanto con granjas como con computadoras de escritorio.
+
+*Comunicación y Paralelismo (Computer Parallel) :
+
+La combinación de comunicación y paralelismo es que se realice paralelismo a nivel de código, explotando el paralelismo lo mayor posible ya que la capacidad de computación no es muy alta. Se busca una paralelismo a nivel de loops a través de trazas. Aquí se pueden aplicar Simultaneous Multithreading o Clusters. También existe el concepto de Fork-Join.
+ 
+*Comunicación y No Paralelismo (Servicios) :
+
+Al contar con mucha comunicación, y sin paralelismo, las aplicaciones se basan en la comunicación excesiva, como pueden ser servicios de mensajería, orientados a redes, o aplicaciones de capas como Cliente-Servidor.
 
 
 
